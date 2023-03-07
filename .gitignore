@@ -1,0 +1,29 @@
+#test
+#practise
+.data
+#out_str:.asciiz"Is it-- [recording]? Yes. \r\nThis is John Schaeffer. I removed a... device, surgically attached to...\r\nI think my brain stem. I don't know how it got there, but I could feel it,\r\nunder the skin. I was hearing... a voice? Not really a voice, a demand,\r\na thought, over and over, in my mind. I assumed it was connected to\r\nthe device so I removed it. \r\nIt worked. Now my thoughts are... well, my own. I have to figure out how it\r\ngot there. Something happened to me. In this place. I don't know where I am\r\nbut... there's something familiar. This nightmare is somehow...\r\nI don't know... expected? Assumed? It's like I was always here,\r\nbut it used to be different. I know things but I don't know how I know them.\r\nI can operate machinery - well like this recorder - but I don't know how\r\nI know. That's my first objective. Objective. That word again! My first...\r\ntask, is to figure out where I am, and why I'm here. And who the others are. \r\nI have seen them, moving through the corridors, opening doors,\r\nattacking those creatures, communicating with each other, but...\r\nit's different. Like they are... programmed, maybe? Maybe I am one of them,\r\nor was? I haven't approached them yet, they seem... violent. Aggressive.\r\nThey're like soldiers but I don't think they are. Maybe mercenaries, or...\r\ncaptives to whatever it is that implanted that device on me. Ugh.\r\nIt's still so confusing. \r\nI think I'm sick. Maybe I got an infection after I ripped out that\r\nFUCKING device. I feel, heavy. Like my brain is wet. I'm tired.\r\nIt could just be this place. The dark. Those... creatures.\r\nWhat the hell are they? \r\nCome on John. You can figure this out. At least I know my name.\r\nMy name is John Schaeffer. "
+str:
+#	.word 0:3
+#	.word 4
+#	.word 5
+.byte 0:6
+.text
+#la $a0,out_str
+#li $t1,4
+#li $t0,0x10010000
+#sw $t1,x #store data into the memery
+#sw $t1,$t0 #store $t1 into $t0
+#sw $t1,4($t0) #store $t1 into address $t0+4
+la $t1,str
+li $s0,0
+li $t0,0xa
+FL:
+bge $s0,6,end
+add $t2,$t1,$s0 #str[i]=str[0]+i
+sb  $t0,($t2)
+add,$s0,$s0,1
+j FL
+
+end:
+li $v0,10
+syscall
